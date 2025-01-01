@@ -1,0 +1,32 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>新建订单</h1>
+        <form method="post">
+            {% csrf_token %}
+            <h2>选择地址</h2>
+            {{ order_form.address }}
+            <button type="submit" name="select_address">下单</button>
+        </form>
+
+        <hr>
+
+        <!-- 添加新地址 -->
+        <h2>添加新地址</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ address_form.as_p }}
+            <button type="submit" name="add_address">保存</button>
+        </form>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

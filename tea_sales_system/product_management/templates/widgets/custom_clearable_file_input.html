@@ -1,0 +1,16 @@
+{% load static %}
+
+<div class="custom-file">
+    {% if widget.value %}
+        <div>
+            <!-- 显示当前文件名 -->
+            <span>{{ widget.value.name }}</span>
+            <br>
+            <!-- 修改文件按钮 -->
+            <a href="javascript:void(0);" onclick="document.getElementById('{{ widget.attrs.id }}').click();">{{ _('更换文件') }}</a>
+        </div>
+    {% endif %}
+    
+    <!-- 文件上传输入框 -->
+    <input type="file" name="{{ widget.name }}" id="{{ widget.attrs.id }}" {% include 'django/forms/widgets/input.html' %}>
+</div>

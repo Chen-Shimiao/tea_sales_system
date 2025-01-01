@@ -1,0 +1,75 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>订单列表</h1>
+        <table class="table table-bordered" style="height:100%">
+            <tr>
+                <th>订单编号</th>
+                <th>顾客</th>
+                <th>总价</th>
+                <th>创建时间</th>
+                <th>订单状态</th>
+                <th>操作</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td><a href="{% url 'order_detail' order.id %}">Order {{ order.id }}</a></td>
+                <td>{{ order.user }}</td>
+                <td>{{ order.final_price }}</td>
+                <td>{{ order.created_at }}</td>
+                <th>{{ order.get_status_display }}</th>
+                {% if status == 'pending_payment' and not is_staff %}
+                <td style="display:flex">
+                    <form action="{% url 'order_pay' order.id%}" method="post">
+                        {% csrf_token %}
+                        <select name="payment_method">
+                            <option value="alipay">支付宝</option>
+                            <option value="wechat">微信</option>
+                            <option value="paypal">银行卡</option>
+                        </select>
+                        <button type="submit">确认付款</button>
+                    </form>
+                    <form action="{% url 'order_cancel' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">取消订单</button>
+                    </form>
+                </td>
+                {% endif %}
+                {% if status == 'pending_shipment' and is_staff%}
+                <td>
+                    <form action="{% url 'order_ship' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">确认发货</button>
+                    </form>
+                </td>
+                {% endif %}
+                {% if status == 'pending_receipt' and not is_staff%}
+                <td>
+                    <form action="{% url 'order_receive' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">确认收货</button>
+                    </form>
+                </td>
+                {% endif %}
+                {% if status == 'pending_review' and not is_staff%}
+                <td>
+                    <form action="{% url 'order_review' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">去评价</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

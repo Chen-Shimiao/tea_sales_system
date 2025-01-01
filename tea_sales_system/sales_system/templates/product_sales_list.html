@@ -1,0 +1,121 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<style>
+    .promotion {
+        color: red;
+        font-weight: bold;
+        border: 1px solid red;
+        padding: 5px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+    .product-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        display: inline-block;
+        width: 200px;
+        text-align: center;
+    }
+    .product-card h2 {
+        font-size: 15px;
+        margin: 10px 0;
+    }
+    .product-card .price {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+</style>
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <form method="get" action=".">
+            <hr class="my-4 border-0" style="margin-bottom:10px; margin-top:0px">
+    <div>
+        <label for="category">分类：</label>
+        <select name="category" id="category">
+            <option value="">全部分类</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="origin">产地：</label>
+        <select name="origin" id="origin">
+            <option value="">全部产地</option>
+            {% for origin in origins %}
+                <option value="{{ origin.id }}" {% if origin.id|stringformat:"s" == request.GET.origin %}selected{% endif %}>
+                    {{ origin.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="min_price">最低价格：</label>
+        <input type="number" name="min_price" id="min_price" value="{{ request.GET.min_price }}">
+        <label for="max_price">最高价格：</label>
+        <input type="number" name="max_price" id="max_price" value="{{ request.GET.max_price }}">
+    <button type="submit">筛选</button>
+            </div>
+</form>
+        <div class="sort-options">
+    <form method="get" action=".">
+        <label for="sort">排序：</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="latest" {% if sort_by == 'latest' %}selected{% endif %}>最新商品</option>
+            <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>价格从低到高</option>
+            <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>价格从高到低</option>
+            <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>名称升序</option>
+            <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>名称降序</option>
+        </select>
+        {% for key, value in request.GET.items %}
+        {% if key != 'sort' %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endif %}
+    {% endfor %}
+    </form>
+</div>
+        <hr class="my-4 border-0" style="margin:10px 0px">
+        <div class="product-list">
+            {% for product in products %}
+            <div class="product-item">
+                <h3 style="margin-top: 10px">{{ product.name }}</h3>
+                <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="200"> <!-- 商品图片 -->
+                <p style="margin-bottom:3px">{{ product.description }}</p> <!-- 商品描述 -->
+                <p style="margin-bottom:3px">价格: {{ product.sales_price }}</p> <!-- 商品价格 -->
+                {% with product.promotion.all as promotions %}
+                {% if promotions %}
+                <p class="promotion" style="margin-bottom:3px">促销活动:</p>
+                <ul style="padding-left:0px">
+                    {% for promotion in promotions %}
+                    <li>
+                        <strong>{{ promotion.name }}</strong><br>
+<!--                        <em>有效期: {{ promotion.start_time|date:"Y-m-d" }} 至 {{ promotion.end_time|date:"Y-m-d"  }}</em>-->
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>无促销活动</p>
+                {% endif %}
+                {% endwith %}
+                <!-- 添加到购物车按钮 -->
+                <form action="{% url 'cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">加入购物车</button>
+                </form>
+                <a href="{% url 'direct_order' product.id %}">直接下单</a>
+            </div>
+            {% empty %}
+            <p>暂无商品</p>
+            {% endfor %}
+        </div>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

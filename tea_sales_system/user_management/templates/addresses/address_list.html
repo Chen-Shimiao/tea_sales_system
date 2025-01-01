@@ -1,0 +1,30 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>我的收货地址</h1>
+        <a href="{% url 'address_add' %}" class="btn btn-success btn-sm">新增地址</a>
+
+        <ul>
+            {% for address in addresses %}
+            <hr>
+            <li>
+                {{ address.province }}, {{ address.city }}, {{ address.district }},{{ address.address_line }}
+                {{ address.full_name }} {{address.phone_number}}
+                <a href="{% url 'address_edit' address.id %}" class="btn btn-warning btn-sm">编辑地址</a> |
+                <a href="{% url 'address_delete' address.id %}" class="btn btn-danger btn-sm">删除地址</a>
+                {% if address.is_default %} (默认地址) {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

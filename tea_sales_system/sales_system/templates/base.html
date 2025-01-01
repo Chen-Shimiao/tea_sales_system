@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <title>茶叶在线销售系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--external css-->
+    <link href="/static/lib/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style-responsive.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    {% block script %}
+    {% endblock %}
+    <!-- =======================================================
+      Template Name: Dashio
+      Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
+      Author: TemplateMag.com
+      License: https://templatemag.com/license/
+    ======================================================= -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</head>
+<style>.cart-icon {
+        position: relative;
+        text-decoration: none;
+        background: #4ECDC4;
+        padding: 0px 15px !important;
+        color:#f2f2f2 !important;
+        margin-top:15px;
+        font-size: 12px !important;
+    }
+    .cart-icon .badge {
+        position: absolute;
+        font-size: 0.8rem;
+    }
+    .logout {
+        margin-left: 20px; /* 使注销按钮与购物车图标有间距 */
+    }</style>
+<body>
+{% block style %}
+{% endblock %}
+<section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a href="/index" class="logo"><b>茶叶销售<span>系统</span></b></a>
+        <!--logo end-->
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li>
+        <a href="/cart/" class="cart-icon" style="color:#f2f2f2">
+            <i class="bi bi-cart" style="font-size: 2rem;"></i>购物车
+            <!-- 显示购物车商品数量 -->
+            <span class="badge bg-danger rounded-pill">
+                {{ cart_item_count|default:0 }}
+            </span>
+        </a>
+    </li>
+                <li><a class="logout" href="/user_logout/">注销登录</a></li>
+            </ul>
+        </div>
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li class="mt">
+                    <a class="" href="/product_sales_list/">
+                        <i class="fa fa-dashboard"></i>
+                        <span>茶叶商城</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a class="" href="/user_management/user_list/">
+                        <i class="fa fa-dashboard"></i>
+                        <span>会员管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/products/">
+                        <i class="fa fa-list-alt"></i>
+                        <span>商品管理</span>
+                    </a>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-list-alt"></i>
+                        <span>订单管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/orders/status/pending_payment/">待付款订单</a></li>
+                        <li><a href="/orders/status/pending_shipment/">待发货订单</a></li>
+                        <li><a href="/orders/status/pending_receipt/">待签收订单</a></li>
+                        <li><a href="/orders/status/pending_review/">待评价订单</a></li>
+                        <li><a href="/orders/status/all/">所有订单</a></li>
+                    </ul>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-list-alt"></i>
+                        <span>资讯管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/detailed_information/">广告管理</a></li>
+                        <li><a href="/ip_request/">营销活动管理</a></li>
+                    </ul>
+                <li class="sub-menu">
+                    <a href="/sales_analysis/">
+                        <i class="fa fa fa-dashboard"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-list-alt"></i>
+                        <span>个人中心</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/user_management/personal_details">个人信息</a></li>
+                        <li><a href="/addresses/">收货地址管理</a></li>
+                    </ul>
+                    <!-- sidebar menu end-->
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <!--sidebar end-->
+    {% block mainbody %}
+    {% endblock %}
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            <p>
+                &copy; Copyrights <strong>吴彤 20210250012</strong>. All Rights Reserved
+            </p>
+        </div>
+    </footer>
+    <!--footer end-->
+</section>
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="/static/lib/jquery/jquery.min.js"></script>
+<script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="/static/lib/jquery.dcjqaccordion.2.7.js"></script>
+<script src="/static/lib/jquery.scrollTo.min.js"></script>
+<script src="/static/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<!--common script for all pages-->
+<script src="/static/lib/common-scripts.js"></script>
+<script type="text/javascript" src="/static/lib/gritter-conf.js"></script>
+<!--script for this page-->
+</body>
+
+</html>

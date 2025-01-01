@@ -1,0 +1,22 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="container mt-4">
+            <h1>更新用户信息</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">更新</button>
+            </form>
+        </div>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

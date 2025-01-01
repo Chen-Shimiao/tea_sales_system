@@ -1,0 +1,33 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+{% load custom_filters %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>订单详情</h1>
+        <p>总价: ￥{{ order.final_price }}</p>
+        <p>优惠: ￥{{ order.discount }}</p>
+        <p>订单状态: {{ order.get_status_display }}</p>
+        <p>地址: {{ order.address }}</p>
+        <ul>
+            {% for item in order.items.all %}
+            <li>{{ item.product.name }} - 数量: {{ item.quantity }} - 单价: ￥{{ item.price }}</li>
+                {% if order.status == 'pending_review' %}
+                    {% if order|is_reviewed:item.product %}
+                    <span>已评价</span>
+                    {% else %}
+                    <a href="{% url 'create_review' order.id item.product.id %}">去评价</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

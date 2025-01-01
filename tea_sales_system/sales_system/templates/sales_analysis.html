@@ -1,0 +1,72 @@
+{%extends "base.html" %}
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>销售数据分析</h1>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% else %}
+        <!-- 图表容器 -->
+        <div id="daily_sales_chart" style="width: 100%; height: 400px;"></div>
+        <div id="top_products_chart" style="width: 100%; height: 400px;"></div>
+
+        <script>
+            // 获取 Django 传递的数据
+            var dailySales = {{ daily_sales|safe }};
+            var topProducts = {{ top_products|safe }};
+
+            // 每日销售额图表
+            var dailySalesChart = echarts.init(document.getElementById('daily_sales_chart'));
+            var dailySalesOption = {
+                title: { text: '每日销售额' },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: Object.keys(dailySales), // 使用 Object.keys 提取键
+                },
+                yAxis: {
+                    type: 'value',
+                },
+                series: [
+                    {
+                        name: '销售额',
+                        type: 'line',
+                        data: Object.values(dailySales), // 使用 Object.values 提取值
+                    }
+                ]
+            };
+            dailySalesChart.setOption(dailySalesOption);
+
+            // 热销商品图表
+            var topProductsChart = echarts.init(document.getElementById('top_products_chart'));
+            var topProductsOption = {
+                title: { text: '热销商品' },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: Object.keys(topProducts), // 使用 Object.keys 提取键
+                },
+                yAxis: {
+                    type: 'value',
+                },
+                series: [
+                    {
+                        name: '销售额',
+                        type: 'bar',
+                        data: Object.values(topProducts), // 使用 Object.values 提取值
+                    }
+                ]
+            };
+            topProductsChart.setOption(topProductsOption);
+        </script>
+    {% endif %}
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

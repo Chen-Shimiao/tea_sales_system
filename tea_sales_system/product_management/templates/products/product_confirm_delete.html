@@ -1,0 +1,22 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>确认删除</h1>
+        <p>确定要删除{{ product.name }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">删除</button>
+        </form>
+        <a href="{% url 'product_list' %}">取消</a>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

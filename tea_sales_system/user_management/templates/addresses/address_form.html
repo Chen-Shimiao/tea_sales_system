@@ -1,0 +1,132 @@
+{%extends "base.html" %}
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+                const citiesData = {{ cities_data|safe }};
+                const provinceSelect = document.getElementById('province');
+                const citySelect = document.getElementById('city');
+                const districtSelect = document.getElementById('district');
+                const selectedProvince = "{{ selected_province }}";
+                const selectedCity = "{{ selected_city }}";
+                const selectedDistrict = "{{ selected_district }}";
+
+                // 填充省份下拉框
+                Object.keys(citiesData).forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province;
+                    option.textContent = province;
+                    provinceSelect.appendChild(option);
+                    if (province === selectedProvince) {
+                        option.selected = true;
+                        Object.keys(citiesData[selectedProvince]).forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city;
+                            option.textContent = city;
+                            citySelect.appendChild(option);
+                            if(city===selectedCity){
+                            option.selected = true;
+                            citiesData[selectedProvince][selectedCity].forEach(district => {
+                            const option = document.createElement('option');
+                            option.value = district;
+                            option.textContent = district;
+                            districtSelect.appendChild(option);
+                            if(district===selectedDistrict){
+                            option.selected = true;
+                            }
+                        });
+                            }
+                        });
+                    }
+                });
+
+                // 省份选择变化时，更新城市下拉框
+                function updateCityOptions() {
+                    const selectedProvince = this.value;
+                    citySelect.innerHTML = '<option value="">请选择城市</option>'; // 清空城市下拉框
+                    districtSelect.innerHTML = '<option value="">请选择区县</option>'; // 清空区县下拉框
+                    districtSelect.disabled = true;
+
+                    if (selectedProvince) {
+                        Object.keys(citiesData[selectedProvince]).forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city;
+                            option.textContent = city;
+                            citySelect.appendChild(option);
+                        });
+                        citySelect.disabled = false;
+                    } else {
+                        citySelect.disabled = true;
+                    }
+                }
+
+                // 城市选择变化时，更新区县下拉框
+                 function updateDistrictOptions() {
+                    const selectedProvince = provinceSelect.value;
+                    const selectedCity = this.value;
+                    districtSelect.innerHTML = '<option value="">请选择区县</option>'; // 清空区县下拉框
+
+                    if (selectedCity) {
+                        citiesData[selectedProvince][selectedCity].forEach(district => {
+                            const option = document.createElement('option');
+                            option.value = district;
+                            option.textContent = district;
+                            districtSelect.appendChild(option);
+                        });
+                        districtSelect.disabled = false;
+                    } else {
+                        districtSelect.disabled = true;
+                    }
+                }
+                provinceSelect.addEventListener("change", updateCityOptions);
+                citySelect.addEventListener("change", updateDistrictOptions);
+            });
+</script>
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>{% if form.instance.id %}编辑地址{% else %}新增地址{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="{{ form.name.full_name }}" class="form-label">{{ form.full_name.label }}</label>
+            {{ form.full_name }}  <!-- 带有自定义样式的 name 字段 -->
+            {{ form.full_name.errors }}
+            <label for="{{ form.name.phone_number }}" class="form-label">{{ form.phone_number.label }}</label>
+            {{ form.phone_number }}  <!-- 带有自定义样式的 name 字段 -->
+            {{ form.phone_number.errors }}
+            <label for="{{ form.name.postal_code }}" class="form-label">{{ form.postal_code.label }}</label>
+            {{ form.postal_code }}  <!-- 带有自定义样式的 name 字段 -->
+            {{ form.postal_code.errors }}
+            <label for="province" class="form-label">省份:</label>
+            <select id="province" class="form-control" name="province" style="width:40%">
+                <option value="">请选择省份</option>
+            </select>
+
+            <label for="city" class="form-label">城市:</label>
+            <select id="city" class="form-control" name="city" style="width:40%">
+                <option value="">请选择城市</option>
+            </select>
+
+            <label for="district" class="form-label">区县:</label>
+            <select id="district" class="form-control" name="district" style="width:40%">
+                <option value="">请选择区县</option>
+            </select>
+            <label for="{{ form.name.address_line }}" class="form-label">{{ form.address_line.label }}</label>
+            {{ form.address_line }}  <!-- 带有自定义样式的 name 字段 -->
+            {{ form.address_line.errors }}
+            <label for="{{ form.name.is_default }}" class="form-label">{{ form.is_default.label }}</label>
+            {{ form.is_default }}  <!-- 带有自定义样式的 name 字段 -->
+            {{ form.is_default.errors }}
+            <div>
+                <button type="submit">保存</button>
+            </div>
+
+        </form>
+        <a href="{% url 'address_list' %}">返回地址列表</a>
+    </section>
+</section>
+<!-- /wrapper -->
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

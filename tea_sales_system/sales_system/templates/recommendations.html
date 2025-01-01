@@ -1,0 +1,37 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>Recommended Products for You</h1>
+
+        {% if products %}
+        <ul>
+            {% for product in products %}
+            <li>
+                <h2>{{ product.name }}</h2>
+                <p>Price: ${{ product.price }}</p>
+                <p>{{ product.description|truncatewords:20 }}</p>
+                <form action="{% url 'cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <label for="quantity_{{ product.id }}">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity_{{ product.id }}" value="1" min="1">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No recommendations available at the moment.</p>
+        {% endif %}
+
+        <a href="{% url 'cart_detail' %}">View Cart</a>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

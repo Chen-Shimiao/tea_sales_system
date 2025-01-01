@@ -1,0 +1,34 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>直接下单</h1>
+        <form method="post">
+            <p>商品：{{ product.name }}</p>
+            <p>单价：¥{{ product.price }}</p>
+            <p>数量：</p><input type="number" name="quantity" value="{{ quantity }}">
+            <p>原价：¥{{ total_price }}</p>
+            <p>促销优惠：¥{{ discount }}</p>
+            <p>最终价格：¥{{ final_price }}</p>
+
+            <h2>选择收货地址</h2>
+            {% csrf_token %}
+            {% for address in addresses %}
+            <label>
+                <input type="radio" name="address" value="{{ address.id }}">
+                {{ address.full_name }}, {{ address.address_line }}, {{ address.city }}
+            </label><br>
+            {% endfor %}
+            <button type="submit">确认下单</button>
+        </form>
+
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

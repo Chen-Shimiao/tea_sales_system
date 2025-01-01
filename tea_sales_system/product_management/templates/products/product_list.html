@@ -1,0 +1,61 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>商品管理</h1>
+        <a href="{% url 'product_add' %}" class="btn btn-success btn-sm">添加新商品</a>
+        <hr class="my-4 border-0">
+        <!-- 商品列表 -->
+        <table class="table table-bordered" style="height:100%">
+            <thead>
+            <tr>
+                <th>商品名称</th>
+                <th>商品进价</th>
+                <th>商品原价</th>
+                <th>商品库存</th>
+                <th>当前促销</th>
+                <th>商品状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.cost_price }}</td>
+                <td>{{ product.sales_price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    {% with product.promotion.all as promotions %}
+                    {% if promotions %}
+                    <ul>
+                        {% for promotion in product.promotion.all %}
+                        <li>
+                            <strong>{{ promotion.name }}</strong>: {{ promotion.description }} <br>
+                            <em>有效期: {{ promotion.start_time|date:"Y-m-d" }} 至 {{ promotion.end_time|date:"Y-m-d"  }}</em>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>无促销活动</p>
+                    {% endif %}
+                    {% endwith %}
+                </td>
+                <td>{{ product.get_status_display  }}</td>
+                <td><a href="{% url 'product_edit' product.id %}" class="btn btn-sm btn-primary">更新信息</a>
+                    <a href="{% url 'product_delete' product.id %}" class="btn btn-sm btn-danger">删除商品</a>
+                    <a href="{% url 'update_stock' product.id %}" class="btn btn-sm btn-warning">更新库存</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

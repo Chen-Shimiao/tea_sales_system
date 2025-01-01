@@ -1,0 +1,48 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <h1>购物车</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>商品</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>小计</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}-->
+            <li>
+                {{ item.product.name }} - {{ item.quantity }} x {{ item.sales_price }} = {{ item.total_price }}
+                <form action="{% url 'cart_remove' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">移除</button>
+                </form>
+                <form action="{% url 'cart_update' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}">
+                    <button type="submit">更新</button>
+                </form>
+            </li>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p>总价: ¥{{ total_price }}</p>
+        <p>优惠金额: ¥{{ discounted_total }}</p>
+        <p>优惠后总价: ¥{{ final_price }}</p>
+        <form method="post" action="{% url 'order_create' %}">
+            {% csrf_token %}
+            <button type="submit">提交订单</button>
+        </form>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

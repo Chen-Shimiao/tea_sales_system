@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <title>茶叶在线销售系统</title>
+    <link href="/static/img/favicon.png" rel="icon">
+    <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/lib/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style-responsive.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="login-page">
+    <div class="container">
+        {% if messages %}
+        <ul class="alert alert-danger">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form class="form-login" action="/register/" method="post">
+            {% csrf_token %}
+            <h2 class="form-login-heading">注册</h2>
+            <div class="login-wrap">
+                <input type="text" class="form-control" name="username" placeholder="用户名" autofocus>
+                <br>
+                <input type="password" class="form-control" name="password" placeholder="密码">
+                <br>
+                <input type="password" class="form-control" name="password2" placeholder="确认密码">
+                <br>
+                <input class="form-control" name="email" placeholder="邮箱">
+                <br>
+                <input class="form-control" type="tel" name="phone" placeholder="电话号码">
+                <br>
+                <select class="form-control form-select" id="gender" name="gender" required>
+                    <option selected disabled>选择性别</option>
+                    <option value="M">男</option>
+                    <option value="F">女</option>
+                </select>
+                <br>
+                <input class="form-control" type="date" name="birthday" placeholder="生日">
+                <br>
+                <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> 注册
+                </button>
+                <hr>
+                <div class="registration">
+                    已经有账号？<br/>
+                    <a class="" href="/user_login/">
+                        去登录
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="/static/lib/jquery/jquery.min.js"></script>
+<script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+<!--BACKSTRETCH-->
+<!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+<script type="text/javascript" src="/static/lib/jquery.backstretch.min.js"></script>
+<script>
+    $.backstretch("/static/img/login-bg.jpg", {
+      speed: 500
+    });
+</script>
+</body>
+
+</html>

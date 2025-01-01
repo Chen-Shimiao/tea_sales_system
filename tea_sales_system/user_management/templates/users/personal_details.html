@@ -1,0 +1,40 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="container mt-4">
+            <h1>个人中心</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label for="{{ form.name.username }}" class="form-label">{{ form.username.label }}</label>
+                {{ form.username }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.username.errors }}
+                <label for="{{ form.name.password }}" class="form-label">{{ form.password.label }}</label>
+                {{ form.password }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.password.errors }}
+                <label for="{{ form.name.gender }}" class="form-label">{{ form.gender.label }}</label>
+                {{ form.gender }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.gender.errors }}
+                <label for="{{ form.name.email }}" class="form-label">{{ form.email.label }}</label>
+                {{ form.email }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.email.errors }}
+                <label for="{{ form.name.phone }}" class="form-label">{{ form.phone.label }}</label>
+                {{ form.phone }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.phone.errors }}
+                <label for="{{ form.birthday.gender }}" class="form-label">{{ form.birthday.label }}</label>
+                {{ form.birthday }}  <!-- 带有自定义样式的 name 字段 -->
+                {{ form.birthday.errors }}
+                <hr style="border:0">
+                <button type="submit" class="btn btn-primary">更新</button>
+            </form>
+        </div>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}
