@@ -90,3 +90,8 @@ class Promotion(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "促销活动"
+        verbose_name_plural = "促销活动"
+        ordering = ["start_time"]
+

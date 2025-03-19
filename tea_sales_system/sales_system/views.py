@@ -10,11 +10,14 @@ from order_management.models import Order, OrderItem
 from alipay import AliPay
 
 from tea_sales_system import settings
+from sales_system.models import Announcement
 
 
 def base(request):
-    template = loader.get_template('base.html')
-    return HttpResponse(template.render())
+    announcements = Announcement.objects.filter(is_active=True).order_by('-created_at')[:5]  # 获取最新的5个公告
+
+    return render(request, 'home.html',
+                  {'announcements': announcements})
 
 def product_sales_list(request):
     # 查询所有商品及其促销信息
@@ -201,7 +204,6 @@ def sales_analysis(request):
         order['created_at'] = timezone.localtime(order['created_at']).strftime('%Y-%m-%d')
         order['final_price']=float(order['final_price'])
 
-    print(order_items)
     # 转换为 Pandas 数据框
     orders_df = pd.DataFrame(orders)
     order_items_df = pd.DataFrame(order_items)
