@@ -8,7 +8,6 @@ class UserForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'form-control custom-input',  # 应用 form-control 类
             'placeholder': '请输入用户名',  # 设置提示文字
-            'style': 'width:40%'
         })
     )
     password = forms.CharField(
@@ -16,7 +15,6 @@ class UserForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'form-control custom-input',  # 应用 form-control 类
             'placeholder': '请输入默认密码',  # 设置提示文字
-            'style': 'width:40%'
         })
     )
     gender = forms.ChoiceField(
@@ -25,7 +23,6 @@ class UserForm(forms.ModelForm):
         widget=forms.Select(attrs={
             'class': 'form-control custom-input',  # 应用 form-control 类
             'placeholder': '请选择性别',  # 设置提示文字
-            'style': 'width:40%'
         })
     )
     email = forms.EmailField(
@@ -33,7 +30,6 @@ class UserForm(forms.ModelForm):
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': '请输入邮箱',
-            'style': 'width:40%'
         })
     )
     phone = forms.CharField(
@@ -44,7 +40,6 @@ class UserForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': '请输入手机号码',
             'pattern': '[0-9]{11}',  # 假设手机号为11位数
-            'style': 'width:40%'
         })
     )
 
@@ -54,7 +49,6 @@ class UserForm(forms.ModelForm):
             'type': 'date',
             'class': 'form-control',
             'placeholder': '请选择生日',
-            'style': 'width:40%'
         }, format='%Y-%m-%d')
     )
     is_active = forms.BooleanField(

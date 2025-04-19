@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+<div class="container mt-4">
+    <h1>促销活动管理</h1>
+    <a href="{% url 'promotion_add' %}" class="btn btn-success mb-3">+ 新增促销活动</a>
+                  <hr class="my-4 border-0">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>促销活动名称</th>
+                <th>促销类型</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>是否启用</th>
+                <th>优先级</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for promo in promotions %}
+            <tr>
+                <td>{{ promo.name }}</td>
+                <td>{{ promo.get_promotion_type_display }}</td>
+                <td>{{ promo.start_time|date:"Y-m-d H:i" }}</td>
+                <td>{{ promo.end_time|date:"Y-m-d H:i" }}</td>
+                <td>{{ promo.is_active|yesno:"启用,禁用" }}</td>
+                <td>{{ promo.priority }}</td>
+                <td>
+                    <a href="{% url 'promotion_edit' promo.id %}" class="btn btn-primary btn-sm">编辑</a>
+                    <a href="{% url 'promotion_delete' promo.id %}" class="btn btn-danger btn-sm">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </section>
+</section>
+{% endblock %}

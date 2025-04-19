@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+<div class="container mt-4">
+    <h1>公告列表</h1>
+    <a href="{% url 'announcement_add' %}" class="btn btn-success mb-3">+ 添加公告</a>
+                    <hr class="my-4 border-0">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>创建时间</th>
+                <th>是否显示</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in announcements %}
+            <tr>
+                <td>{{ a.title }}</td>
+                <td>{{ a.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ a.is_active|yesno:"是,否" }}</td>
+                <td>
+                    <a href="{% url 'announcement_edit' a.id %}" class="btn btn-sm btn-primary">编辑</a>
+                    <a href="{% url 'announcement_delete' a.id %}" class="btn btn-sm btn-danger">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </section>
+</section>
+{% endblock %}

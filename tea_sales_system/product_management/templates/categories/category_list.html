@@ -1,28 +1,40 @@
-{%extends "base.html" %}
+{% extends "base.html" %}
 
 {% block mainbody %}
-<!-- **********************************************************************************************************************************************************
-    MAIN CONTENT
-    *********************************************************************************************************************************************************** -->
 <section id="main-content">
     <section class="wrapper site-min-height">
-        <h1>Category List</h1>
-        <a href="{% url 'category_create' %}">Add New Category</a>
-        <ul>
-            {% for category in categories %}
-            <li>
-                {{ category.name }} - <a href="{% url 'category_update' category.id %}">Edit</a>
-                <form action="{% url 'category_delete' category.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-
+        <div class="container mt-4">
+            <h1 class="mb-4">分类管理</h1>
+            <a href="{% url 'category_create' %}" class="btn btn-success mb-3">+ 新增分类</a>
+                  <hr class="my-4 border-0">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 40%;">分类名称</th>
+                        <th>描述</th>
+                        <th style="width: 20%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% include "categories/category_table_rows.html" with categories=categories parent=None level=0 %}
+                </tbody>
+            </table>
+        </div>
     </section>
-    <!-- /wrapper -->
 </section>
-<!-- /MAIN CONTENT -->
-<!--main content end-->
+
+<!-- 展开/折叠 JS -->
+<script>
+    function toggleSubcategories(elem, id) {
+        const rows = document.querySelectorAll(`.subcategory-of-${id}`);
+        rows.forEach(row => {
+            const isHidden = row.classList.toggle('d-none');
+            const toggleIcon = row.querySelector('.toggle');
+            if (toggleIcon && !toggleIcon.dataset.touched) {
+                toggleIcon.textContent = toggleIcon.textContent === '▶' ? '▼' : '▶';
+                toggleIcon.dataset.touched = true;
+            }
+        });
+    }
+</script>
 {% endblock %}

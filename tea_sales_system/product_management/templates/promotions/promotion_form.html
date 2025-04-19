@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+      <div class="container mt-4">
+          <h2>{% if form.instance.pk %}编辑促销活动{% else %}新增促销活动{% endif %}</h2>
+          <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-success">保存</button>
+              <a href="{% url 'promotion_list' %}" class="btn btn-secondary ms-2">返回</a>
+          </form>
+      </div>
+      <br>
+       <br>      <br>
+    </section>
+</section>
+{% endblock %}

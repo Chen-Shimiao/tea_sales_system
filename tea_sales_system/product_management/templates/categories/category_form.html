@@ -1,22 +1,31 @@
-{%extends "base.html" %}
+{% extends "base.html" %}
 
 {% block mainbody %}
-<!-- **********************************************************************************************************************************************************
-    MAIN CONTENT
-    *********************************************************************************************************************************************************** -->
 <section id="main-content">
     <section class="wrapper site-min-height">
-        <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Category</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save</button>
-        </form>
-        <a href="{% url 'category_list' %}">Back to Category List</a>
-
+        <div class="container mt-5">
+            <div >
+                <div>
+                    <h2>
+                        {% if form.instance.pk %}
+                            编辑分类
+                        {% else %}
+                            添加分类
+                        {% endif %}
+                    </h2>
+                </div>
+                <div >
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-success">保存</button>
+                            <a href="{% url 'category_list' %}" class="btn btn-secondary ms-2">返回分类列表</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
-    <!-- /wrapper -->
 </section>
-<!-- /MAIN CONTENT -->
-<!--main content end-->
 {% endblock %}

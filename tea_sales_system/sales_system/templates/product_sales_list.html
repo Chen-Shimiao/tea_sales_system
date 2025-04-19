@@ -31,9 +31,10 @@
 <!-- **********************************************************************************************************************************************************
     MAIN CONTENT
     *********************************************************************************************************************************************************** -->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <form method="get" action=".">
+<section>
+    <section class="wrapper site-min-height" style="min-width: -webkit-fill-available; margin-top:0px">
+        <div class="container mt-5" style="max-width:1140px!important">
+            <form method="get" action=".">
             <hr class="my-4 border-0" style="margin-bottom:10px; margin-top:0px">
     <div>
         <label for="category">分类：</label>
@@ -111,6 +112,8 @@
             {% empty %}
             <p>暂无商品</p>
             {% endfor %}
+        </div>
+
         </div>
 
     </section>

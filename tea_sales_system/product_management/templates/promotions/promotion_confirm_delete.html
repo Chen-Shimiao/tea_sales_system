@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+<div class="container mt-4">
+    <h4>确认删除促销活动：「{{ promotion.name }}」吗？</h4>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">确认删除</button>
+        <a href="{% url 'promotion_list' %}" class="btn btn-secondary ms-2">取消</a>
+    </form>
+</div>
+    </section>
+</section>
+{% endblock %}

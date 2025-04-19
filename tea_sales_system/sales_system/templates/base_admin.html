@@ -1,0 +1,99 @@
+<header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a href="/" class="logo"><b>茶叶销售<span>系统</span></b></a>
+        <!--logo end-->
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li>
+        <a href="/cart/" class="cart-icon" style="color:#f2f2f2">
+            <i class="bi bi-cart" style="font-size: 2rem;"></i>购物车
+            <!-- 显示购物车商品数量 -->
+            <span class="badge bg-danger rounded-pill">
+                {{ cart_item_count|default:0 }}
+            </span>
+        </a>
+    </li>
+                <li><a class="logout" href="/user_logout/">注销登录</a></li>
+            </ul>
+        </div>
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li class="mt">
+                    <a class="" href="/system_index/">
+                        <i class="fas fa-home"></i>
+                        <span>茶叶商城</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a class="" href="/user_management/user_list/">
+                        <i class="fas fa-user"></i>
+                        <span>会员管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/categories/">
+                        <i class="fas fa-tags"></i>
+                        <span>分类管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/products/">
+                        <i class="fas fa-box"></i>
+                        <span>商品管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>订单管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/orders/status/pending_payment/">待付款订单</a></li>
+                        <li><a href="/orders/status/pending_shipment/">待发货订单</a></li>
+                        <li><a href="/orders/status/pending_receipt/">待签收订单</a></li>
+                        <li><a href="/orders/status/pending_review/">待评价订单</a></li>
+                        <li><a href="/orders/status/all/">所有订单</a></li>
+                    </ul>
+                <li class="sub-menu">
+                    <a href="/sales_analysis/">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fas fa-user-circle"></i>
+                        <span>个人中心</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/user_management/personal_details">个人信息</a></li>
+                        <li><a href="/addresses/">收货地址管理</a></li>
+                    </ul>
+                    <!-- sidebar menu end-->
+                </li>
+                                <li class="sub-menu">
+                    <a href="/announcements/">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>公告管理</span>
+                    </a>
+                </li>
+                                <li class="sub-menu">
+                    <a href="/promotions/">
+                        <i class="fas fa-percentage"></i>
+                        <span>促销活动管理</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>

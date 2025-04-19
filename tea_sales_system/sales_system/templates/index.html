@@ -1,0 +1,108 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<style>
+    .promotion {
+        color: red;
+        font-weight: bold;
+        border: 1px solid red;
+        padding: 5px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+    .product-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        display: inline-block;
+        width: 200px;
+        text-align: center;
+    }
+    .product-card h2 {
+        font-size: 15px;
+        margin: 10px 0;
+    }
+    .product-card .price {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+</style>
+<!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+<section>
+    <section class="wrapper site-min-height" style="min-width: -webkit-fill-available; margin-top:0px">
+        <form method="get" action=".">
+            <hr class="my-4 border-0" style="margin-bottom:10px; margin-top:0px">
+            <div class="mx-auto" style="max-width: 1100px;">
+<div id="teaCarousel" class="carousel slide mt-4 mb-4" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#teaCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#teaCarousel" data-slide-to="1"></li>
+    <li data-target="#teaCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <div class="carousel-inner rounded">
+    <div class="carousel-item active">
+      <img src="/static/img/tea1.jpg" class="d-block" alt="绿茶精选" height="500" width="1100">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>春茶上市</h5>
+        <p>春天新采绿茶，清新上线！</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/tea2.jpg" class="d-block" alt="红茶推荐" height="500" width="1100">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>红茶推荐</h5>
+        <p>浓香红茶，经典回味。</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/tea3.jpg" class="d-block" alt="花茶特惠" height="500" width="1100">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>花茶热卖</h5>
+        <p>香气四溢的花茶，立减优惠！</p>
+      </div>
+    </div>
+  </div>
+
+  <a class="carousel-control-prev" href="#teaCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">上一张</span>
+  </a>
+  <a class="carousel-control-next" href="#teaCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">下一张</span>
+  </a>
+</div>
+            </div>
+        <hr class="my-4 border-0" style="margin:10px 0px">
+    <h1 >热门茶推荐<a href="/product_sales_list/" class="btn btn-link">查看更多>></a></h1>
+
+        <div class="product-list" style="min-width: -webkit-fill-available">
+            {% for product in products %}
+            <div class="product-item">
+                <h3 style="margin-top: 10px">{{ product.name }}</h3>
+                <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="200"> <!-- 商品图片 -->
+                <p style="margin-bottom:3px">{{ product.description }}</p> <!-- 商品描述 -->
+                <p style="margin-bottom:3px">价格: {{ product.sales_price }}</p> <!-- 商品价格 -->
+
+                <!-- 添加到购物车按钮 -->
+                <form action="{% url 'cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">加入购物车</button>
+                </form>
+                <a href="{% url 'direct_order' product.id %}">直接下单</a>
+            </div>
+            {% empty %}
+            <p>暂无商品</p>
+            {% endfor %}
+        </div>
+        </form>
+    </section>
+    <!-- /wrapper -->
+</section>
+<!-- /MAIN CONTENT -->
+<!--main content end-->
+{% endblock %}

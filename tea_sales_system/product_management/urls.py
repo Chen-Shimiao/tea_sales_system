@@ -13,4 +13,8 @@ urlpatterns = [
     path('categories/update/<int:category_id>/', views.category_update, name='category_update'),
     path('categories/delete/<int:category_id>/', views.category_delete, name='category_delete'),
     path('products/update_promotion/<int:product_id>/',views.update_promotion,name='update_promotion'),
+    path('promotions/', views.promotion_list, name='promotion_list'),
+    path('promotions/add/', views.promotion_create, name='promotion_add'),
+    path('promotions/<int:pk>/edit/', views.promotion_update, name='promotion_edit'),
+    path('promotions/<int:pk>/delete/', views.promotion_delete, name='promotion_delete'),
 ]

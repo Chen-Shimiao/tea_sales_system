@@ -67,7 +67,7 @@ def user_login(request):
         if user is not None:
             user.backend = 'user_management.backends.CustomAuthBackend'
             login(request, user)
-            return redirect('product_sales_list')  # 登录成功后重定向到主页
+            return redirect('index')  # 登录成功后重定向到主页
         else:
             messages.error(request, '用户名或密码不正确')
     return render(request, 'users/login.html')

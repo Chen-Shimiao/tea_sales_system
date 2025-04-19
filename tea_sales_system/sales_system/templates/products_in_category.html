@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section class="wrapper site-min-height">
+  <div class="container mt-5" style="max-width:1140px!important">
+    <h3>{{ parent_category.name }} - 所有商品</h3>
+    <p class="text-muted">{{ parent_category.description }}</p>
+
+    {% if products %}
+      <div class="row">
+        {% for product in products %}
+          <div class="product-item">
+                <h3 style="margin-top: 10px">{{ product.name }}</h3>
+                <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="200"> <!-- 商品图片 -->
+                <p style="margin-bottom:3px">{{ product.description }}</p> <!-- 商品描述 -->
+                <p style="margin-bottom:3px">价格: {{ product.sales_price }}</p> <!-- 商品价格 -->
+
+                <!-- 添加到购物车按钮 -->
+                <form action="{% url 'cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">加入购物车</button>
+                </form>
+                <a href="{% url 'direct_order' product.id %}">直接下单</a>
+            </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">该分类暂无商品。</p>
+    {% endif %}
+
+    <a href="{% url 'products_by_category' %}" class="btn btn-secondary mt-3">返回所有分类</a>
+  </div>
+</section>
+{% endblock %}

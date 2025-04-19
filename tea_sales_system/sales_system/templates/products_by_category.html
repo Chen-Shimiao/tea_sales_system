@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+<section>
+  <section class="wrapper site-min-height" style="min-width: -webkit-fill-available; margin-top:0px">
+    <div class="container mt-5" style="max-width:1140px!important">
+      {% for parent_category, products in category_products.items %}
+        <div class="mt-5">
+          <h4>{{ parent_category.name }}</h4>
+          <p class="text-muted">{{ parent_category.description }}</p>
+
+          {% if products %}
+            <div class="product-list flex-wrap">
+              {% for product in products|slice:":5" %}  {# 默认展示前5个商品 #}
+                <div class="product-item mr-4 mb-4" style="width: 250px;">
+                  <h5 style="margin-top: 10px">{{ product.name }}</h5>
+                  <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="200">
+                  <p style="margin-bottom:3px">{{ product.description }}</p>
+                  <p style="margin-bottom:3px">价格: {{ product.sales_price }}</p>
+
+                  <form action="{% url 'cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">加入购物车</button>
+                  </form>
+                  <a href="{% url 'direct_order' product.id %}">直接下单</a>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- 查看更多按钮 -->
+            {% if products|length > 1 %}
+              <div class="text-right mt-3">
+                <a href="{% url 'category_products' parent_category.id %}" class="btn btn-outline-primary btn-sm">查看更多 {{ parent_category.name }} 商品</a>
+              </div>
+            {% endif %}
+
+          {% else %}
+            <p class="text-muted ml-3">该分类暂无商品</p>
+          {% endif %}
+
+          <!-- 分割线 -->
+          <hr class="my-4" style="border-top: 1px solid #ccc;">
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+</section>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category, Promotion
-from .forms import ProductForm, CategoryForm
+from .forms import ProductForm, CategoryForm, PromotionForm
 
 
 def home(request):
@@ -105,3 +105,30 @@ def update_stock(request, product_id):
             product.reduce_stock(quantity)
         return redirect('product_list')
     return render(request, 'products/update_stock.html', {'product': product})
+
+def promotion_list(request):
+    promotions = Promotion.objects.all().order_by('-priority')
+    return render(request, 'promotions/promotion_list.html', {'promotions': promotions})
+
+def promotion_create(request):
+    form = PromotionForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('promotion_list')
+    return render(request, 'promotions/promotion_form.html', {'form': form})
+
+def promotion_update(request, pk):
+    promotion = get_object_or_404(Promotion, pk=pk)
+    form = PromotionForm(request.POST or None, instance=promotion)
+    if form.is_valid():
+        form.save()
+        return redirect('promotion_list')
+    return render(request, 'promotions/promotion_form.html', {'form': form})
+
+def promotion_delete(request, pk):
+    promotion = get_object_or_404(Promotion, pk=pk)
+    if request.method == 'POST':
+        promotion.delete()
+        return redirect('promotion_list')
+    return render(request, 'promotions/promotion_confirm_delete.html', {'promotion': promotion})
+

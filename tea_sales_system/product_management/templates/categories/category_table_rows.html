@@ -1,0 +1,33 @@
+{% for category in categories %}
+    {% if category.parent == parent %}
+        <tr class="{% if parent %}subcategory-of-{{ parent.id }} d-none{% endif %}">
+            <!-- 分类名称（含层级缩进 + 展开按钮） -->
+            <td>
+                <span style="margin-left: {{ level|add:"0" }}em;">
+                    {% if category.subcategories.all %}
+                        <span class="toggle" style="cursor:pointer; color:#0d6efd;" onclick="toggleSubcategories(this, '{{ category.id }}')">▶</span>
+                    {% else %}
+                        &nbsp;&nbsp;
+                    {% endif %}
+                    {{ category.name }}
+                </span>
+            </td>
+
+            <!-- 描述 -->
+            <td>{{ category.description }}</td>
+
+            <!-- 操作按钮 -->
+            <td>
+                <a href="{% url 'category_update' category.id %}" class="btn btn-sm btn-primary">编辑</a>
+                <form action="{% url 'category_delete' category.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger"
+                        onclick="return confirm('确定删除该分类？')">删除</button>
+                </form>
+            </td>
+        </tr>
+
+        <!-- 递归子分类 -->
+        {% include "categories/category_table_rows.html" with categories=categories parent=category level=level|add:"2" %}
+    {% endif %}
+{% endfor %}

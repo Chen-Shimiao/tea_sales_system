@@ -68,7 +68,12 @@ class ProductForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'parent']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'parent': forms.Select(attrs={'class': 'form-select'}),
+        }
 
 class CustomClearableFileInput(forms.ClearableFileInput):
     template_name = 'widgets/custom_clearable_file_input.html'  # 指定自定义模板
@@ -76,3 +81,22 @@ class CustomClearableFileInput(forms.ClearableFileInput):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('attrs', {}).update({'class': 'form-control'})
         super().__init__(*args, **kwargs)
+
+class PromotionForm(forms.ModelForm):
+    class Meta:
+        model = Promotion
+        fields = ['name', 'promotion_type', 'discount', 'full_price', 'reduction_price', 'buy_quantity', 'gift_quantity', 'start_time', 'end_time', 'is_active', 'priority', 'allow_stack']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'promotion_type': forms.Select(attrs={'class': 'form-select'}),
+            'discount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'full_price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'reduction_price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'buy_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'gift_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'start_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'priority': forms.NumberInput(attrs={'class': 'form-control'}),
+            'allow_stack': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

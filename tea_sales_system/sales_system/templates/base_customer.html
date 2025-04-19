@@ -1,0 +1,99 @@
+
+<!--Main navbar-->
+<div class="main-nav-sticky py-1">
+    <nav class="navbar px-1 py-0 navbar-expand-lg d-block d-lg-flex">
+        <div class="d-flex justify-content-between">
+            <!--Logo-->
+            <a class="navbar-brand px-2" href="" style="display:contents">
+                <img src="/static/img/logo.png" alt="logo" class="logo"><b style="font-size:20pt; color:black">茶叶销售系统</b>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto" style="margin-left:100px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif; font-size:16px; font-weight:500; color:#333; text-decoration:none;">
+                <li class="nav-item nav-item-header mr-5">
+                    <a class="nav-link nav-link-header uppercase text-black {% if request.get_full_path == '/products/services/' %}active-nav-link{% endif %}"
+                        href="/system_index/">商城首页
+                    </a>
+                </li>
+                <li class="nav-item nav-item-header mr-5">
+                    <a class="nav-link nav-link-header uppercase text-black {% if request.get_full_path == '/products/services/' %}active-nav-link{% endif %}"
+                        href="/products_by_category/">茶叶分类
+                    </a>
+                </li>
+                <li class="nav-item nav-item-header mr-5">
+                    <a class="nav-link nav-link-header uppercase text-black {% if request.get_full_path == '/products/services/' %}active-nav-link{% endif %}"
+                        href="/product_sales_list/">所有商品
+                    </a>
+                </li>
+            </ul>
+            <!--Search from on large screens-->
+<!--            <form  method="GET" action="" class="form-inline my-2 my-lg-0 d-none d-lg-block">-->
+<!--                <div>-->
+<!--                    <input class="form-control" type="text" name="serach_term_input"-->
+<!--                            placeholder="Search" aria-label="Search">-->
+<!--                        <button class="btn btn-outline-dark my-2 my-sm-0 border-white rounded-right"-->
+<!--                                type="submit">-->
+<!--                            <i class="fas fa-search text-black"></i>-->
+<!--                        </button>-->
+<!--                </div>-->
+<!--            </form>-->
+        </div>
+        <div><ul class="nav">
+            <li class="nav-item d-none d-md-block dropdown">
+                    <a class="nav-link py-0 text-black"  href="#" id="accountDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        <div class="text-center">
+                               <div><i class="fas fa-user"></i></div>
+                                <small class="my-0">个人中心</small>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                        <a class="dropdown-item" href="/user_management/personal_details">
+                            <i class="fas fa-user"></i> 编辑资料
+                        </a>
+                        <a class="dropdown-item border-top" href="/user_logout/">
+                           <i class="fas fa-sign-out-alt"></i> 退出登录
+                        </a>
+                    </div>
+           </li>
+            <li class="nav-item d-none d-md-block dropdown">
+                    <a class="nav-link py-0 text-black"  href="#" id="orderDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        <div class="text-center">
+                               <div><i class="fas fa-clipboard-list"></i></div>
+                                <small class="my-0">我的订单</small>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                        <a class="dropdown-item" href="/orders/status/all/">
+                            <i class="fas fa-clipboard-list"></i> 全部订单
+                        </a>
+                        <a class="dropdown-item" href="/orders/status/pending_payment/">
+                            <i class="fas fa-wallet"></i> 待付款订单
+                        </a>
+                        <a class="dropdown-item" href="/orders/status/pending_shipment/">
+                            <i class="fas fa-box"></i> 待发货订单
+                        </a>
+                        <a class="dropdown-item" href="/orders/status/pending_receipt/">
+                            <i class="fas fa-truck"></i> 待收货订单
+                        </a>
+                        <a class="dropdown-item" href="/orders/status/pending_review/">
+                            <i class="fas fa-comment-dots"></i> 待评价订单
+                        </a>
+                    </div>
+           </li>
+ <li class="nav-item">
+                <a class="nav-link mr-5 py-0 text-black"
+                    href="/cart/">
+                    <div>
+                        <div><i class="fas fa-shopping-cart"></i></div>
+                        <small>
+                           <span class="font-weight-bold">{{ cart_item_count|default:0 }}</span>
+                        </small>
+                    </div>
+                </a>
+            </li>
+        </ul></div>
+    </nav>
+</div>
